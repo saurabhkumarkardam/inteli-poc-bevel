@@ -29,7 +29,7 @@
 
   - name: "Pull from 1-azure-inteli-devenv"
     shell: |
-      git pull 1-azure-inteli-devenv
+      git pull origin2 1-azure-inteli-devenv
 
   # Create namespace
   - name: "Create namespace"
