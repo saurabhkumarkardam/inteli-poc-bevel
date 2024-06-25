@@ -32,10 +32,11 @@
 
 - name: Find the first member peer if not already set
   set_fact:
-    first_member_peer: "{{ peer.name }}"
+    first_member_peer: "{{ item.name }}"
     first_member_org: "{{ org_name }}"
-    ipfs_bootnode_name: "{{ peer.name }}"
-  when: peer.type is defined and peer.type == "member" and first_member_peer == ""
+    ipfs_bootnode_name: "{{ item.name }}"
+  loop: "{{ org.services.peers }}"
+  when: item.type is defined and item.type == "member" and first_member_peer == ""
   register: first_member_peer_result
 
 
