@@ -17,10 +17,10 @@
     git_url: "{{ org.gitops.git_url }}"
     git_branch: "{{ org.gitops.branch }}"
     docker_url: "{{ network.docker.url }}"
+  when: peer.type == "ipfs-bootnode"
   # loop: "{{ peers }}"
   # loop_control:
   #   loop_var: peer
-  # when: peer.type == "ipfs-bootnode"
 
 # Git Push : Push the above generated files to git directory 
 - name: Git Push
