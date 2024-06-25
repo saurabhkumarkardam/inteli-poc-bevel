@@ -32,3 +32,16 @@
     GIT_DIR: "{{ playbook_dir }}/../../../"
     gitops: "{{ item.gitops }}"
     msg: "[ci skip] Pushing ipfs node files"
+
+- name: Find the first member peer
+  set_fact:
+    first_member_peer: "{{ item }}"
+  loop: "{{ network.organizations.services.peers }}"
+  when: item.type is defined and item.type == "member"
+  register: first_member_peer_result
+  until: first_member_peer_result is succeeded
+
+- name: Print the first member peer
+  debug:
+    msg: "{{ first_member_peer }}"
+  when: first_member_peer_result is succeeded
