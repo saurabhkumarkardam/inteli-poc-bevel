@@ -27,6 +27,10 @@
       path: "./build"
       state: absent
 
+  - name: "Pull from 1-azure-inteli-devenv"
+    shell: |
+      git pull 1-azure-inteli-devenv
+
   # Create namespace
   - name: "Create namespace"
     include_role: 
