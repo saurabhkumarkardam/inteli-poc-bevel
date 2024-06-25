@@ -99,7 +99,7 @@ spec:
       p2p: 15022
       certSecret: tierone-ambassador-certs
 
-    storageClass: tieronestorageclass
+    storageClass: tierone-bevel-storageclass
 
     vault:
       address: http://108.142.38.154:20001      

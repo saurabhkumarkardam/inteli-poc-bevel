@@ -99,7 +99,7 @@ spec:
       p2p: 15011
       certSecret: oem-ambassador-certs
 
-    storageClass: oemstorageclass
+    storageClass: oem-bevel-storageclass
 
     vault:
       address: http://108.142.38.154:20001      
