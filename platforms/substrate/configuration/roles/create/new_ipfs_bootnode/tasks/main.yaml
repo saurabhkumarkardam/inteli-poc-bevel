@@ -3,11 +3,28 @@
     first_member_org: ""
     first_member_peer: ""
     ipfs_bootnode_name: ""
+    count: 0
     # node_list: []
+
+- name: "Generate IPFS BOOTNODE endpoint"
+  include_tasks: nested.yaml
+  vars:
+    generate_ipfs_url: true
+    org: "{{ item }}"
+    org_name: "{{ org.name | lower }}"
+    component_ns: "{{ org.name | lower }}-subs"
+    vault: "{{ org.vault }}"
+  loop: "{{ network['organizations'] }}"
+  when: network.config.node_image == "inteli-poc/dscp-node"
+
+- name: pause
+  pause:
+    minutes: 2
 
 - name: "Deploy ipfs bootnodes- main.yaml"
   include_tasks: nested.yaml
   vars:
+    generate_ipfs_url: false
     org: "{{ item }}"
     org_name: "{{ org.name | lower }}"
     vault: "{{ org.vault }}"
