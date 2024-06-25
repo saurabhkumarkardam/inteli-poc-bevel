@@ -152,23 +152,27 @@
   #     peers: "{{ item.services.peers }}"
   #   loop: "{{ network['organizations'] }}"
 
-  # Deploy ipfs bootnodes
-  - name: "Deploy ipfs bootnodes"
-    include_role: 
-      name: create/ipfs_bootnode
-    vars:
-      build_path: "./build"
-      charts_dir: "{{ item.gitops.chart_source }}"
-      values_dir: "{{playbook_dir}}/../../../{{item.gitops.release_dir}}/{{ item.name | lower }}"
-      org: "{{ item }}"
-      vault: "{{ item.vault }}"
-      peers: "{{ item.services.peers }}"
-      gitops: "{{ item.gitops }}"
-      component_name: "{{ item.name | lower }}"
-      component_ns: "{{ item.name | lower }}-subs"
-      name: "{{ item.name | lower }}"
-    loop: "{{ network['organizations'] }}"
-    when: network.config.node_image == "inteli-poc/dscp-node"
+  - name: "Deploy new IPFS BOOTNODE ---------------"
+    include_role:
+      name: create/new_ipfs_bootnode
+
+  # # Deploy ipfs bootnodes
+  # - name: "Deploy ipfs bootnodes"
+  #   include_role: 
+  #     name: create/ipfs_bootnode
+  #   vars:
+  #     build_path: "./build"
+  #     charts_dir: "{{ item.gitops.chart_source }}"
+  #     values_dir: "{{playbook_dir}}/../../../{{item.gitops.release_dir}}/{{ item.name | lower }}"
+  #     org: "{{ item }}"
+  #     vault: "{{ item.vault }}"
+  #     peers: "{{ item.services.peers }}"
+  #     gitops: "{{ item.gitops }}"
+  #     component_name: "{{ item.name | lower }}"
+  #     component_ns: "{{ item.name | lower }}-subs"
+  #     name: "{{ item.name | lower }}"
+  #   loop: "{{ network['organizations'] }}"
+  #   when: network.config.node_image == "inteli-poc/dscp-node"
 
   - name: "Pause for 2 min"
     pause:

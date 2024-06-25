@@ -24,24 +24,47 @@
     loop_var: peer
   when: peer.type == "ipfs-bootnode"
 
-# Git Push : Push the above generated files to git directory 
-- name: Git Push
-  include_role: 
-    name: "{{ playbook_dir }}/../../shared/configuration/roles/git_push"
-  vars:
-    GIT_DIR: "{{ playbook_dir }}/../../../"
-    gitops: "{{ item.gitops }}"
-    msg: "[ci skip] Pushing ipfs node files"
+# # Git Push : Push the above generated files to git directory 
+# - name: Git Push
+#   include_role: 
+#     name: "{{ playbook_dir }}/../../shared/configuration/roles/git_push"
+#   vars:
+#     GIT_DIR: "{{ playbook_dir }}/../../../"
+#     gitops: "{{ item.gitops }}"
+#     msg: "[ci skip] Pushing ipfs node files"
 
-- name: Find the first member peer
+- name: Find the first member peer if not already set
   set_fact:
-    first_member_peer: "{{ item }}"
-  loop: "{{ network.organizations.services.peers }}"
-  when: item.type is defined and item.type == "member"
+    first_member_peer: "{{ item.name }}"
+    first_member_org: "{{ name }}"
+    # ipfs_bootnode_name: "{{ peer.name }}"
+  loop: "{{ item.services.peers }}"
+  when: item.type is defined and item.type == "member" and first_member_peer == ""
   register: first_member_peer_result
-  until: first_member_peer_result is succeeded
+
+- name: Fetch bootnode peer id from vault
+  shell: |
+    vault kv get -field=node_id {{ vault.secret_path | default('secretsv2') }}/{{ first_member_org }}/{{ first_member_peer }}/substrate
+  environment:
+    VAULT_ADDR: "{{ vault.url }}"
+    VAULT_TOKEN: "{{ vault.root_token }}"
+  register: node_id
+
+- name: Collect first Member node data
+  set_fact:
+    node_list={{ node_list|default([]) + [ {'bootnode_id':node_id.stdout, 'external_url':internal_url, 'p2p_port':4001} ] }}
+  vars:
+    internal_url: "oem-ipfs-bn-ipfs-swarm.{{ component_ns }}.svc.cluster.local"
 
 - name: Print the first member peer
   debug:
     msg: "{{ first_member_peer }}"
-  when: first_member_peer_result is succeeded
+  when: first_member_peer != ""
+- name: Print the first member org
+  debug:
+    msg: "{{ first_member_org }}"
+  when: first_member_peer != ""
+- name: Print the first node_list
+  debug:
+    msg: "{{ node_list }}"
+

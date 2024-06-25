@@ -1,0 +1,66 @@
+##############################################################################################
+#  Copyright Accenture. All Rights Reserved.
+#
+#  SPDX-License-Identifier: Apache-2.0
+##############################################################################################
+
+# Generate ipfs node helmrelease file
+- name: "Create ipfs node release file"
+  include_role:
+    name: create/helm_component
+  vars:
+    name: "{{ org_name }}"
+    type: "dscp_ipfs_node"
+    component_name: "{{ peer.name }}-ipfs-node"
+    external_url: "{{ org.external_url_suffix }}"
+    storageclass_name: "{{ org_name }}-bevel-storageclass"
+    git_url: "{{ org.gitops.git_url }}"
+    git_branch: "{{ org.gitops.branch }}"
+    docker_url: "{{ network.docker.url }}"
+  # loop: "{{ peers }}"
+  # loop_control:
+  #   loop_var: peer
+  # when: peer.type == "ipfs-bootnode"
+
+# Git Push : Push the above generated files to git directory 
+- name: Git Push
+  include_role: 
+    name: "{{ playbook_dir }}/../../shared/configuration/roles/git_push"
+  vars:
+    GIT_DIR: "{{ playbook_dir }}/../../../"
+    msg: "[ci skip] Pushing ipfs node files"
+
+- name: Find the first member peer if not already set
+  set_fact:
+    first_member_peer: "{{ peer.name }}"
+    first_member_org: "{{ org_name }}"
+    ipfs_bootnode_name: "{{ peer.name }}"
+  when: peer.type is defined and peer.type == "member" and first_member_peer == ""
+  register: first_member_peer_result
+
+- name: Fetch bootnode peer id from vault
+  shell: |
+    vault kv get -field=node_id {{ vault.secret_path | default('secretsv2') }}/{{ first_member_org }}/{{ first_member_peer }}/substrate
+  environment:
+    VAULT_ADDR: "{{ vault.url }}"
+    VAULT_TOKEN: "{{ vault.root_token }}"
+  register: node_id
+
+- name: Collect first Member node data
+  set_fact:
+    node_list={{ node_list|default([]) + [ {'bootnode_id':node_id.stdout, 'external_url':internal_url, 'p2p_port':peer.ipfs.swarmPort} ] }}
+  vars:
+    internal_url: "{{ ipfs_bootnode_name }}-ipfs-swarm.{{ component_ns }}.svc.cluster.local"
+
+- name: Print the first member peer
+  debug:
+    msg: "{{ first_member_peer }}"
+  when: first_member_peer != ""
+- name: Print the first member org
+  debug:
+    msg: "{{ first_member_org }}"
+  when: first_member_peer != ""
+- name: Print the first node_list
+  debug:
+    msg: "{{ node_list }}"
+
