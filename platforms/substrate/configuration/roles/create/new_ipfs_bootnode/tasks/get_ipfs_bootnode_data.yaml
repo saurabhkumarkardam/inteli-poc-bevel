@@ -34,7 +34,7 @@
   set_fact:
     first_member_peer: "{{ item.name }}"
     first_member_org: "{{ org_name }}"
-    ipfs_bootnode_name: "{{ item.name }}"
+    # ipfs_bootnode_name: "{{ item.name }}"
   loop: "{{ org.services.peers }}"
   when: item.type is defined and item.type == "member" and first_member_peer == ""
   register: first_member_peer_result
@@ -63,7 +63,7 @@
   set_fact:
     node_list: "{{ node_list | default([]) + [ { 'bootnode_id': node_id.stdout, 'external_url': internal_url, 'p2p_port': peer.ipfs.swarmPort } ] }}"
   vars:
-    internal_url: "{{ ipfs_bootnode_name }}-ipfs-swarm.{{ component_ns }}.svc.cluster.local"
+    internal_url: "{{ peer.name }}-ipfs-swarm.{{ component_ns }}.svc.cluster.local"
 
 
 
