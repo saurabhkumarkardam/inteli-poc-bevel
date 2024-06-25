@@ -38,17 +38,7 @@
   when: peer.type is defined and peer.type == "member" and first_member_peer == ""
   register: first_member_peer_result
 
-- name: Print the first member peer
-  debug:
-    msg: "{{ first_member_peer }}"
-  when: first_member_peer != ""
-- name: Print the first member org
-  debug:
-    msg: "{{ first_member_org }}"
-  when: first_member_peer != ""
-- name: Print the first node_list
-  debug:
-    msg: "{{ node_list }}"
+
 
 - name: Fetch bootnode peer id from vault
   shell: |
@@ -66,3 +56,14 @@
 
 
 
+- name: Print the first member peer
+  debug:
+    msg: "{{ first_member_peer }}"
+  when: first_member_peer != ""
+- name: Print the first member org
+  debug:
+    msg: "{{ first_member_org }}"
+  when: first_member_peer != ""
+- name: Print the first node_list
+  debug:
+    msg: "{{ node_list }}"
