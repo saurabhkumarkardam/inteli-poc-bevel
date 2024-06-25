@@ -51,7 +51,7 @@
 
 - name: Collect first Member node data
   set_fact:
-    node_list={{ node_list|default([]) + [ {'bootnode_id':node_id.stdout, 'external_url':internal_url, 'p2p_port':peer.ipfs.swarmPort} ] }}
+    node_list: "{{ node_list | default([]) + [ { 'bootnode_id': node_id.stdout, 'external_url': internal_url, 'p2p_port': peer.ipfs.swarmPort } ] }}"
   vars:
     internal_url: "{{ ipfs_bootnode_name }}-ipfs-swarm.{{ component_ns }}.svc.cluster.local"
 
