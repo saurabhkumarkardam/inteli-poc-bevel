@@ -3,7 +3,7 @@
     first_member_org: ""
     first_member_peer: ""
     ipfs_bootnode_name: ""
-    node_list: []
+    # node_list: []
 
 - name: "Deploy ipfs bootnodes- main.yaml"
   include_tasks: nested.yaml
