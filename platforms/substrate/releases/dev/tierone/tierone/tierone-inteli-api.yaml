@@ -1,8 +1,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: oem-inteli-api
-  namespace: oem-subs
+  name: tierone-inteli-api
+  namespace: tierone-subs
   annotations:
     fluxcd.io/automated: "false"
     repository.fluxcd.io/app: image.repository
@@ -18,24 +18,24 @@ spec:
         name: flux-dscpdev
         namespace: flux-dscpdev
       chart: examples/dscp-app/charts/inteli-api
-  releaseName: oem-inteli-api
+  releaseName: tierone-inteli-api
   values:
-    fullnameOverride: oem-inteli-api
+    fullnameOverride: tierone-inteli-api
     config:
       port: 3000
-      externalPostgresql: oem-postgresql.oem-subs
+      externalPostgresql: tierone-postgresql.tierone-subs
       dbName: inteli-api
       dbPort: 5432
-      dscpApiHost: oem-api.oem-subs
+      dscpApiHost: tierone-api.tierone-subs
       dscpApiPort: 80
       logLevel: info
-      identityServiceHost: oem-id-service.oem-subs
+      identityServiceHost: tierone-id-service.tierone-subs
       identityServicePort: 3001
-      externalAddress: https://oem-inteli-api.dscp.inteli-poc.com
+      externalAddress: https://tierone-inteli-api.dscp.inteli-poc.com
       auth:
-        type: NONE
+        type: none
         jwksUri: https://inteli-poc.eu.auth0.com/.well-known/jwks.json
-        audience: https://inteli-poc.com/api
+        audience: https://inteli-poc-tierone.com/api
         issuer: https://inteli-poc.eu.auth0.com/
         tokenUrl: https://inteli-poc.eu.auth0.com/oauth/token
 
@@ -76,7 +76,7 @@ spec:
 
     proxy:
       provider: ambassador
-      name: oem 
+      name: tierone 
       external_url_suffix: dscp.inteli-poc.com
       port: 443
-      issuedFor: oem
+      issuedFor: tierone
