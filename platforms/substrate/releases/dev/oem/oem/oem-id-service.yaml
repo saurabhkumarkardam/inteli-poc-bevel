@@ -57,7 +57,7 @@ spec:
     vault:
       alpineutils: ghcr.io/hyperledger/alpine-utils:1.0
       address: http://108.142.38.154:20001
-      secretprefix: secretsv2/data/oem-subs/oem
+      secretprefix: secretsv2/data/oem/oem
       serviceaccountname: vault-auth
       role: vault-role
-      authpath: substrateoem
+      authpath: "dscpdevoem"
