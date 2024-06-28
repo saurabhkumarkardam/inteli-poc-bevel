@@ -59,4 +59,4 @@ spec:
       secretprefix: {{ component_vault.secret_path | default('secretsv2') }}/data/{{ component_ns }}/{{ peer.name }}
       serviceaccountname: vault-auth
       role: vault-role
-      authpath: substrate{{ org.name | lower }}
+      authpath: "{{ network.env.type }}{{ org.name | lower }}"

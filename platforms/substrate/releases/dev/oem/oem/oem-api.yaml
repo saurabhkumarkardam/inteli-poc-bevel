@@ -59,4 +59,4 @@ spec:
       secretprefix: secretsv2/data/oem-subs/oem
       serviceaccountname: vault-auth
       role: vault-role
-      authpath: substrateoem
+      authpath: "dscpdevoem"
