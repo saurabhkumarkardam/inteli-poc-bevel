@@ -78,6 +78,7 @@
     include_role:
       name: "create/dscp/id-service"
     vars:
+      org_name: "{{ org.name | lower }}"
       component_ns: "{{ org.name | lower }}-subs"
       component_gitops: "{{ org.gitops }}"
       component_vault: "{{ org.vault }}"
