@@ -72,7 +72,8 @@ spec:
               validateVaultResponse 'vault login token' "${VAULT_CLIENT_TOKEN}"
               echo "Logged into Vault"
   
-              vault_secret_key="${VAULT_SECRET_PREFIX}/auth"
+              # vault_secret_key="${VAULT_SECRET_PREFIX}/auth"
+              vault_secret_key="${VAULT_SECRET_PREFIX}/gcpkey" # TESTING-REMOVE_IT
 
               echo "Getting the auth keys from vault: $vault_secret_key"          
               LOOKUP_SECRET_RESPONSE=$(curl -sS \
