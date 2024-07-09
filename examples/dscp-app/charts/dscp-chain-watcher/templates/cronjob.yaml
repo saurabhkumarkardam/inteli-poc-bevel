@@ -105,7 +105,7 @@ spec:
                       jq -r 'if .errors then . else . end')
                     validateVaultResponse "secret (${vault_secret_key})" "${LOOKUP_SECRET_RESPONSE}" "LOOKUPSECRETRESPONSE"
                     gcpKey=$(echo ${LOOKUP_SECRET_RESPONSE} | jq -r '.data.data["gcpkey"]')
-                                  
+                    
                     echo -n "${gcpKey}" > ${MOUNT_PATH}/gcpKey.json
                   fi
 
