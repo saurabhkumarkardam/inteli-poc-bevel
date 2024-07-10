@@ -94,7 +94,7 @@ spec:
                     jq -r 'if .errors then . else .auth.client_token end')
                   validateVaultResponse 'vault login token' "${VAULT_CLIENT_TOKEN}"
                   echo "Logged into Vault"
-      
+
                   if [ "${FETCH_GCP_KEY}" == "true" ]; then
                     vault_secret_key="${VAULT_SECRET_PREFIX}/gcpkey"
 
@@ -129,7 +129,7 @@ spec:
                       TOKEN=$(cat ${MOUNT_PATH}/token.txt)
                       
                       checkResponse=$(curl -s -H "Authorization: Bearer ${TOKEN}" ${INTELI_API_ADDR}/v1/health)
-
+                      
                       if [ "$checkResponse" == "ok" ]; then
                           echo "response ok - token valid"
                           exit 0
@@ -138,7 +138,7 @@ spec:
                           jq -n -j --arg ID ${CLIENT_ID} --arg SECRET ${CLIENT_SECRET} --arg AUDIENCE ${AUDIENCE} --arg GRANT ${GRANT_TYPE} '{"client_id": $ID, "client_secret": $SECRET, "audience": $AUDIENCE, "grant_type": $GRANT}' > ${MOUNT_PATH}/data.json
                           curl -s -X POST -H "Content-Type: application/json" -d @${MOUNT_PATH}/data.json ${TOKEN_ADDR} | jq '.access_token' | tr -d '"' > ${MOUNT_PATH}/token.txt
                       fi
-
+                      
                   else
                       #Generate token and mount
                       echo "token is not present - generating token file"
