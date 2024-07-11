@@ -6,7 +6,8 @@
 # Store gcp key into vault
 - name: "Store gcp key in vault"
   shell: |
-     vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ component_ns }}/gcpkey gcpkey="$(cat {{ org.kinaxis.keyPath }})" 
+    #  vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ component_ns }}/gcpkey gcpkey="$(cat {{ org.kinaxis.keyPath }})" 
+     vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ org_name }}/gcpkey gcpkey="$(cat {{ org.kinaxis.keyPath }})" 
   environment:
     VAULT_ADDR: "{{ component_vault.url }}"
     VAULT_TOKEN: "{{ component_vault.root_token }}"
@@ -15,7 +16,8 @@
   # Store inteli-api auth0 keys into vault
 - name: "Store inteli-api auth0 keys in vault"
   shell: |
-     vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ component_ns }}/inteliAuth clientId="{{ org.auth.clientId }}" clientSecret="{{ org.auth.secret }}"
+    #  vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ component_ns }}/inteliAuth clientId="{{ org.auth.clientId }}" clientSecret="{{ org.auth.secret }}"
+     vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ org_name }}/inteliAuth clientId="{{ org.auth.clientId }}" clientSecret="{{ org.auth.secret }}"
   environment:
     VAULT_ADDR: "{{ component_vault.url }}"
     VAULT_TOKEN: "{{ component_vault.root_token }}"

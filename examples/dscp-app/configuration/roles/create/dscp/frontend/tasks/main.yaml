@@ -25,7 +25,8 @@
 # Store auth client secret and id keys into vault
 - name: "Store auth client secret and id keys in vault"
   shell: |
-     vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ component_ns }}/auth frontendClientId="{{ org.frontendAuth.clientId }}" mapKey="{{ org.frontendAuth.mapKey }}"
+    #  vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ component_ns }}/auth frontendClientId="{{ org.frontendAuth.clientId }}" mapKey="{{ org.frontendAuth.mapKey }}"
+     vault kv put {{ component_vault.secret_path | default('secretsv2') }}/{{ org_name }}/auth frontendClientId="{{ org.frontendAuth.clientId }}" mapKey="{{ org.frontendAuth.mapKey }}"
   environment:
     VAULT_ADDR: "{{ component_vault.url }}"
     VAULT_TOKEN: "{{ component_vault.root_token }}"

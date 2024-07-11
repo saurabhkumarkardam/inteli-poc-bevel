@@ -43,7 +43,7 @@ spec:
     vault:
       alpineutils: ghcr.io/hyperledger/alpine-utils:1.0
       address: {{ component_vault.url }}
-      secretprefix: {{ component_vault.secret_path | default('secretsv2') }}/data/{{ component_ns }}
+      secretprefix: {{ component_vault.secret_path | default('secretsv2') }}/data/{{ org_name }}
       serviceaccountname: vault-auth
       role: vault-role
       authpath: "{{ network.env.type }}{{ org.name | lower }}"
