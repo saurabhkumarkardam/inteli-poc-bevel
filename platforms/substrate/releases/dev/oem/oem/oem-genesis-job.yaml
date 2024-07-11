@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: oem-genesis-job
+  namespace: oem-subs
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: oem-genesis-job
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-dscpdev
+        namespace: flux-dscpdev
+      chart: platforms/substrate/charts/substrate-genesis
+  values:
+    node:
+      name: oem-genesis-job
+      image: ghcr.io/inteli-poc/dscp-node
+      imageTag: v4.3.1
+      pullPolicy: IfNotPresent
+      command: ./dscp-node
+    metadata:
+      name: oem-genesis-job
+      namespace: oem-subs
+    vault:
+      address: http://108.142.38.154:20001
+      role: vault-role
+      authpath: dscpdevoem
+      serviceaccountname: vault-auth
+      certsecretprefix: secretsv2/oem
+    chain: inteli
+    aura_keys: ['5DaX7Waa27YxhdsguDwRy2ZHo1G7t6NDuq73Mf1xSFtB9mD8', '5Gbqq7nwJ2Vjcgs5fK8TPd9s9ZgNT81bm3gpC7FRBENX2BK4', '5DXLasncBiwSMpAofFZPfkzhakmx9vZLicdxe1kquLBqwybR']
+    grandpa_keys: ['5FC52gT5U8MCDjQjF9NFFXo7nZV16scZwXkoNQQvfp5wAfPY', '5HqUcd9EnKzMoUPW2bzif8yNJHvG5vfPRgA9s2FQEgC2Dx9t', '5CVhPrCmvbDwMqkBvJ8PefVy5AUuAQfrmQUpuGyz7P4Rsgnm']
+    members: 
+      -   account_id: 5EFj8kUa6fKGgVTSoEx1R4YmMW4pbpNHh4FeimXqb3DxQQiF
+          balance: 1152921504606846976
+          nodes:
+          - 00240801122066F3BE23735773203FE0B5FB452D87D44F0BD918CC900B7D6FAF66991FDB73AA
+          - 0024080112207F8894CD7770D7AEF5B1541C0C94DE851A65802715280667D7EF27E6191CC257
+          - 002408011220583EBD3A3BF790A579E18F18CA5891051AFAA08FA935C734AD92C00930026BCA
+          - 002408011220CD3CD497B83F2AFA62B9A20EF424B651ACA95E9A00054007F37A3BB110430284
+          - 002408011220C44B88834AC7EA5DE5835B2790792FCAF62D325696D3155EF1F85682ECA964C8
+      -   account_id: 5H1aj9LBMuGafaw1c9seLeADJymEE4pmRsUsHR67LXFM5Mz7
+          balance: 1152921504606846976
+          nodes:
+          - 002408011220D35A8E58459BC11C7A1C6DA5AE03567089C6CF1419FC64C6841959771E3ACCDF
+          - 0024080112200DEAC9262B8355AA9898FD0E689924B8E69205C9F0481A49922901C839D7D4C4
+      -   account_id: 5CLXY5gZptPsgBtoCiGF5adTWcsCBZCXuZFyqs6WFutSFLom
+          balance: 1152921504606846976
+          nodes:
+          - 002408011220033F0A676F17E7EA5B5EF7CF4CCB6CAEF6ECF8D3ED40AD02A5F631433BA19BB9
