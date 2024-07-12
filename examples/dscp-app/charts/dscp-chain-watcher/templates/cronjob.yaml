@@ -11,7 +11,7 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ include "chain-watcher.fullname" . }}-cron-job
 spec:
-  schedule: "*/1 22 * * *" #Everyday at 22:01
+  schedule: "*/1 22 * * *" #Everyday at 22:01, it will run 60 times, starting at 10:00 PM and ending at 10:59 PM, every day.
   jobTemplate:
     spec:
       backoffLimit: 6
