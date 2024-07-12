@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: oem-chain-watcher
+  name: oem-chain-watcher-new
   namespace: oem-subs
   annotations:
     fluxcd.io/automated: "false"
