@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: oem-genesis-job
+  namespace: oem-subs
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: oem-genesis-job
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-dscpdev
+        namespace: flux-dscpdev
+      chart: platforms/substrate/charts/substrate-genesis
+  values:
+    node:
+      name: oem-genesis-job
+      image: ghcr.io/inteli-poc/dscp-node
+      imageTag: v4.3.1
+      pullPolicy: IfNotPresent
+      command: ./dscp-node
+    metadata:
+      name: oem-genesis-job
+      namespace: oem-subs
+    vault:
+      address: http://108.142.38.154:20001
+      role: vault-role
+      authpath: dscpdevoem
+      serviceaccountname: vault-auth
+      certsecretprefix: secretsv2/oem
+    chain: inteli
+    aura_keys: ['5EtQfKRs4Jy854cEnizgsT4yQYPhD6h9zjFWJ7fH8y1LVoBE', '5GGi86xWcqP7uPsvobzrxsNyMCzQwXqwji4XsoAmieq3yoex', '5GRgdo6WudYuY3SBaegrMSu6kZzkMmpoBgq1GY89dMwfHcNR']
+    grandpa_keys: ['5EjFNkKCj7pJq6V2kGCeGaXsaKG9yuxSqPqrX1KBbXfz7js5', '5DyCLsoG3SgtecNmsQh2LoZqHW3u42LJg5E2tWRkaBpE57gS', '5GND76opYoA2acrbdJdYuvLDN5PmXRa9fQhMsJXZpr2Rxjwt']
+    members: 
+      -   account_id: 5DaMaHRoVy95yCWXRrosiPAW1cyVmATXgAQ52yLGk4mREwe2
+          balance: 1152921504606846976
+          nodes:
+          - 002408011220516A308574C765D7A9639FDB3CD0191DB2DF55A8060C284D26FE0282528B5AB6
+          - 002408011220BD31F18DC422B5811590D7453306AABD62ACBB2A12784399B5DCA21D3DB82791
+          - 0024080112201D9E6EE6857BE0F78029635EF92813E31339B005ECA82D12B4BCD0B1815C51BB
+          - 002408011220643D9E913ED0A1A6BAD54537CE3C5F99FE59DBD5109DF3A56C10C4F35AF81E9A
+          - 002408011220502A3C122B7672B1AAB43BE47360DA54A71540DC31493BFF4827525703B52E6D
+      -   account_id: 5GEXirSTfhygCjeQo2HsH2augP7Nbxn2m2CxqE1qfFpWNvcN
+          balance: 1152921504606846976
+          nodes:
+          - 0024080112205A16E413CD0BE94083C6E3FAD74F98B614D43F0BCEE53ABE6609AAC0A60EA284
+          - 0024080112205473014FD2DC7D70F066F1B91E5D078F3CB62C378EEC7E940D1B6725F84128E0
+      -   account_id: 5HCCuXKJEFAvXXxdS8TRZKcnLh44rXZ551xzUmCXi9MsxcTk
+          balance: 1152921504606846976
+          nodes:
+          - 0024080112202C1B574D2DA0C57F6675BB42CD983015E00B65A0C6A855D65A295A0800D1FCD1
