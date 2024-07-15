@@ -6,8 +6,8 @@
 apiVersion: v1
 name: indy-node
 description: Hyperledger Indy nodes for a SSI network
-version: 1.0.1
-appVersion: latest
+version: 1.1.0
+appVersion: 'latest'
 keywords:
   - bevel
   - identity
