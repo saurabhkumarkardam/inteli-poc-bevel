@@ -12,8 +12,8 @@ spec:
       interval: 1m
       sourceRef:
         kind: GitRepository
-        name: flux-dscpdev
-        namespace: flux-dscpdev
+        name: flux-dscpdev-1
+        namespace: flux-dscpdev-1
       chart: examples/dscp-app/charts/dscp-api
   releaseName: oem-api
   values:
@@ -59,4 +59,4 @@ spec:
       secretprefix: secretsv2/data/oem/oem
       serviceaccountname: vault-auth
       role: vault-role
-      authpath: "dscpdevoem"
+      authpath: "dscpdev-1oem"
