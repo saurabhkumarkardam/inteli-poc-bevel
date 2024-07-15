@@ -32,11 +32,9 @@ spec:
       idServicePort: {{ peer.id_service.port }}
       inteliApiHost: {{ name }}-{{ peer.inteli_api.db_name }}.{{ component_ns }}
       inteliApiPort: {{ peer.inteli_api.port }}
-{% if org.auth.type == "auth" %}
       inteliApiAudience: {{ org.auth.audience }}
       inteliApiGrant: {{ org.auth.grantType }}
       inteliApiTokenAddr: {{ org.auth.tokenUrl }}
-{% endif %}
       fetchGcpKey: {{ fetch_gcp_key }}
       
     image:
