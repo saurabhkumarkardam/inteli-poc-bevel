@@ -38,13 +38,11 @@ spec:
         audience: {{ auth_audience }}
         issuer: {{ auth_issuer }}
         tokenUrl: {{ auth_tokenUrl }}
-
     deployment:
       annotations: {}
       livenessProbe:
         enabled: true
       replicaCount: 1
-
     ingress:
       enabled: false
       annotations: {}
@@ -55,25 +53,20 @@ spec:
         - /v1/order
         - /v1/part
         - /v1/recipe
-
     service:
       annotations: {}
       enabled: false
       port: 
-
     image:
       repository: ghcr.io/inteli-poc/inteli-api # {"$imagepolicy": "flux-{{ network.env.type }}:inteli-api:name"}
       pullPolicy: IfNotPresent
-      tag: 'v1.0.0' # {"$imagepolicy": "flux-{{ network.env.type }}:inteli-api:tag"}
+      tag: 'v1.31.0-7426113-1684513443' # 'v1.0.0' # {"$imagepolicy": "flux-{{ network.env.type }}:inteli-api:tag"}
       pullSecrets: 
-
     postgresql:
       enabled: false
       postgresqlDatabase: {{ peer.inteli_api.db_name }}
       postgresqlUsername: {{ peer.postgresql.user }}
       postgresqlPassword: {{ peer.postgresql.password }}
-
-
     proxy:
       provider: {{ network.env.proxy }}
       name: {{ org.name | lower }} 
