@@ -50,4 +50,3 @@ spec:
       branch: "{{ .Values.git.branch }}"
   update:
     strategy: Setters
- 
