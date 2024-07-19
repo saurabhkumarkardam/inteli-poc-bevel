@@ -14,15 +14,15 @@
   tasks:
   # ----------------------------------------------------------------------
 
-  # Uninstalling Flux for organisation
-  - name: Delete Flux
-    include_role:
-      name: delete/flux
-    vars:
-      kubernetes: "{{ organizationItem.k8s }}"
-    loop: "{{ network['organizations'] }}"
-    loop_control:
-      loop_var: organizationItem
+  # # Uninstalling Flux for organisation
+  # - name: Delete Flux
+  #   include_role:
+  #     name: delete/flux
+  #   vars:
+  #     kubernetes: "{{ organizationItem.k8s }}"
+  #   loop: "{{ network['organizations'] }}"
+  #   loop_control:
+  #     loop_var: organizationItem
   
   # Cleanup Flux release folder in Git for all organizations
   - name: Delete release folder
@@ -35,6 +35,7 @@
       release_dir: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/{{ organization }}"
       release_ns_dir: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/{{ organization_ns }}"
       flux_mainfest_dir: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/flux-{{ network.env.type }}"
+      flux_image_automation: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/auto"
     loop: "{{ network['organizations'] }}"
     loop_control:
       loop_var: organizationItem
@@ -75,7 +76,6 @@
       release_dir: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/{{ organization }}"
       release_ns_dir: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/{{ organization_ns }}"
       flux_mainfest_dir: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/flux-{{ network.env.type }}"
-      flux_image_automation: "{{ playbook_dir }}/../../../{{ gitops.release_dir }}/auto"
     loop: "{{ network['organizations'] }}"
     loop_control:
       loop_var: organizationItem
