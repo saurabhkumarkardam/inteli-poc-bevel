@@ -29,6 +29,12 @@
   when:
   - remove_org is undefined or not remove_org
 
+# This task deletes all flux image automation
+- name: Delete flux image automation files
+  file:
+    path: "{{ flux_image_automation }}"
+    state: absent
+
 # Git Push : Pushes the above generated files to git directory
 - name: Git Push
   include_role:
