@@ -8,6 +8,8 @@
 # Create the HelmRelease files for the image automation
 - name: Create helmrelease files for flux automation
   include_tasks: nested_main.yaml
+  vars:
+    org_name: "{{ org.name | lower }}"
   loop: "{{ network.docker.autodeploy }}"
   loop_control:
     loop_var: image
@@ -17,7 +19,6 @@
   include_role:
     name: "create/shared_k8s_secrets"
   vars:
-    org_name: "{{ org.name | lower }}"
     namespace: "flux-{{ network.env.type }}"
     component_name: "flux-{{ network.env.type }}"
     check: "docker_credentials"
