@@ -30,7 +30,7 @@ spec:
       image: ghcr.io/hyperledger/alpine-utils:1.0
       pullPolicy: IfNotPresent
     vault:
-      address: http://127.0.0.1:8200
+      address: http://vault.sub.blockchaincloudpoc-develop.com
       role: vault-role
       authpath: dscpoem
       serviceaccountname: vault-auth
