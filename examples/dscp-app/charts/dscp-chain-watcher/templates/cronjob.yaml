@@ -160,9 +160,6 @@ spec:
                 export GOOGLE_APPLICATION_CREDENTIALS=/secret/gcpKey.json
                 export AUTH_TOKEN=$(cat /secret/token.txt)
 
-                sleep 10m
-                echo "Sleeping"
-
                 node ./index.js
               env:
                 - name: DB_HOST
