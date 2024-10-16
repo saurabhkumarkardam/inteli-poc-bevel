@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: oem-genesis-job
+  namespace: oem-subs
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: oem-genesis-job
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-dscp
+        namespace: flux-dscp
+      chart: platforms/substrate/charts/substrate-genesis
+  values:
+    node:
+      name: oem-genesis-job
+      image: ghcr.io/inteli-poc/dscp-node
+      imageTag: v4.3.1
+      pullPolicy: IfNotPresent
+      command: ./dscp-node
+    metadata:
+      name: oem-genesis-job
+      namespace: oem-subs
+    vault:
+      address: http://inteli-vault.sub.blockchaincloudpoc-develop.com
+      role: vault-role
+      authpath: dscpoem
+      serviceaccountname: vault-auth
+      certsecretprefix: secretsv2/oem
+    chain: inteli
+    aura_keys: ['5F6U1hGzK4qz6NG6y52AWD7aLweWbfjAsfXjagpQJvwNNKqK', '5E7CrqHa9o41iXqRZuaHDPDacwMKDHnz71KRHEULmCFthvP2', '5FxHVLebxdYaLaXxWkaY1uA5Ca6VctsFfvU8smewoRGD9Haa']
+    grandpa_keys: ['5Gd9zc4X9CeyGewPnWR2MCg3AzfRXzyd4vNqkcLUtCng7uGe', '5CjYfHXg7Es1W62FwkmcPvK74XPXfkvDsTMGtmnmCMWmnRs2', '5HoFyEknBRa4mrV2qk1pP3SQ2XNoUQgGyZRPhGpiKsUTFu8n']
+    members: 
+      -   account_id: 5GCFPcQMrWKk8ioWJ23XTeh1F3totc4XnTw6ypBsZHYD7Wg5
+          balance: 1152921504606846976
+          nodes:
+          - 002408011220E10CF0F68E76A7297F1D536E9CBC4B377F6ED00FC74200CB3C86D6CDD79F7123
+          - 0024080112202F69E01619DA5C581C38AFCFCC9E815A2450E430A64DEEFCE3EAE95A4F5D0A67
+          - 002408011220798E7593D29957FC1A419E26D7A2B38075393351C56F3B923BC8AFD691703D05
+          - 002408011220C6001414FAB4C6FE0F824F0DA017327CFE6D6FEF370D85EBC0CB49B74435A2F5
+          - 002408011220C3A902B7526E52AE3FCDA9178EF2CCCBC1180CBE06A9BFFA750B02418924DC67
+      -   account_id: 5CaEQz3JUY3428s5tJB27K4az2HxjnH6RRB76o7GHTcuhcjs
+          balance: 1152921504606846976
+          nodes:
+          - 002408011220EC79A98FF63FF51AA47DDB5D02469B528735B6400C771C93C38DBD5D05361E16
+          - 0024080112209E829B51EF95DEA7412A29CFEC4247A95B9E7972637E5B96AEB17B076AF0B106
+      -   account_id: 5H5niiM16w6Dxe2fVa18Ugre6sLMTfystz5wuMAwqMsuMDMF
+          balance: 1152921504606846976
+          nodes:
+          - 0024080112208854E2ED829B3AC5B7983833A146AF28A0093AFE1C2EAF052ADE2337D70D2D18
